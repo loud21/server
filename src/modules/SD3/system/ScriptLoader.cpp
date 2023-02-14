@@ -1142,6 +1142,18 @@ void AddBattlegroundScripts()
     AddSC_battleground();
 }
 
+// Custom script loading function start here
+void AddSC_ps_impl_example();
+void AddSC_ws_impl_example();
+
+
+void AddCustomScripts()
+{
+    AddSC_ps_impl_example();
+    AddSC_ws_impl_example();
+}
+
+
 // initialize scripts
 void AddScripts()
 {
@@ -1157,4 +1169,5 @@ void AddScripts()
 #endif
 
     AddBattlegroundScripts();
+    AddCustomScripts();
 }

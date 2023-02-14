@@ -531,6 +531,38 @@ endif()
 # --- END IF ---
 
 
+
+#Raid: Vault of Archavon
+file(GLOB sources_raid_nr_voa scripts/northrend/vault_of_archavon/*.cpp scripts/northrend/vault_of_archavon/*.h)
+  LIST(APPEND mangosscript_LIB_SRCS ${sources_raid_nr_voa})
+  source_group("Northrend Scripts\\Raids\\Vault of Archavon" FILES ${sources_raid_nr_voa})
+
+
+# Load custom scripts and subdirectories
+
+# Custom Scripts Base Folder
+file(
+GLOB sources_custom 
+scripts/custom/*.cpp 
+scripts/custom/*.h)
+LIST(APPEND mangosscript_LIB_SRCS ${sources_custom})
+source_group("Custom Scripts" FILES ${sources_custom})
+
+# Custom Scripts PlayerScripts Folder
+file(GLOB sources_ps 
+scripts/custom/PlayerScripts/*.cpp 
+scripts/custom/PlayerScripts/*.h)
+LIST(APPEND mangosscript_LIB_SRCS ${sources_ps})
+source_group("Player Scripts" FILES ${sources_ps})
+
+# Custom Scripts WorldScripts Folder
+file(GLOB sources_ws 
+scripts/custom/WorldScripts/*.cpp 
+scripts/custom/WorldScripts/*.h)
+LIST(APPEND mangosscript_LIB_SRCS ${sources_ws})
+source_group("World Scripts" FILES ${sources_ws})
+
+
 add_library(mangosscript STATIC ${mangosscript_LIB_SRCS})
 
 target_include_directories(mangosscript
@@ -549,3 +581,7 @@ target_link_libraries(mangosscript
 if(PCH)
     ADD_CXX_PCH(mangosscript ${mangosscript_PCH})
 endif()
+
+
+
+
