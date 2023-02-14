@@ -61,6 +61,7 @@
 #include "movement/MovementStructures.h"
 #ifdef ENABLE_ELUNA
 #include "LuaEngine.h"
+#include "PlayerScript.h"
 #include "ElunaEventMgr.h"
 #endif /* ENABLE_ELUNA */
 
@@ -1665,6 +1666,9 @@ void Unit::JustKilledCreature(Creature* victim, Player* responsiblePlayer)
 #ifdef ENABLE_ELUNA
             sEluna->OnCreatureKill(responsiblePlayer, victim);
 #endif /* ENABLE_ELUNA */
+
+            // Add custom onCreatureKill hook
+            sPlayerScriptMgr->Execute(PlayerEvents::PLAYER_EVENT_ON_KILL_CREATURE, responsiblePlayer, &std::make_pair(victim, 10));
     }
 
     // Notify the outdoor pvp script

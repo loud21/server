@@ -47,6 +47,7 @@
 #include "Timer.h"
 #ifdef ENABLE_ELUNA
 #include "LuaEngine.h"
+#include "PlayerScript.h"
 #endif /* ENABLE_ELUNA */
 
 // config option SkipCinematics supported values
@@ -1040,6 +1041,9 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder* holder)
     }
 
     m_playerLoading = false;
+
+    // Add custom onLogin hook
+    sPlayerScriptMgr->Execute(PlayerEvents::PLAYER_EVENT_ON_LOGIN, pCurrChar);
 
     // Used by Eluna
 #ifdef ENABLE_ELUNA

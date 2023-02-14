@@ -48,6 +48,7 @@
 #include "zlib.h"
 #ifdef ENABLE_ELUNA
 #include "LuaEngine.h"
+#include "PlayerScript.h"
 #endif /*ENABLE_ELUNA*/
 #ifdef ENABLE_PLAYERBOTS
 //#include "playerbot.h"
@@ -628,6 +629,9 @@ void WorldSession::LogoutPlayer(bool Save)
 #ifdef ENABLE_PLAYERBOTS
         uint32 guid = GetPlayer()->GetGUIDLow();
 #endif
+
+        // Add custom onLogout hook
+        sPlayerScriptMgr->Execute(PlayerEvents::PLAYER_EVENT_ON_LOGOUT, _player);
 
         ///- Used by Eluna
 #ifdef ENABLE_ELUNA
