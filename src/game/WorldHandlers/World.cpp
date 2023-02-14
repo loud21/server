@@ -87,6 +87,8 @@
 #include "LuaEngine.h"
 #endif /* ENABLE_ELUNA */
 
+#include "WorldScript.h"
+
 // WARDEN
 #include "WardenCheckMgr.h"
 
@@ -1038,6 +1040,10 @@ void World::LoadConfigSettings(bool reload)
 
     setConfig(CONFIG_BOOL_ELUNA_ENABLED, "Eluna.Enabled", true);
 
+    // Add custom onConfigLoad(true) hook
+    if (reload)
+        sWorldScriptMgr->Execute(WorldEvents::WORLD_EVENT_ON_CONFIG_LOAD, &reload);
+
 #ifdef ENABLE_ELUNA
     if (reload)
     {
@@ -1640,6 +1646,9 @@ void World::SetInitialWorldSettings()
     sEluna->RunScripts();
     sEluna->OnConfigLoad(false); // Must be done after Eluna is initialized and scripts have run.
 #endif
+
+     // Add custom onConfigLoad(false) hook
+    sWorldScriptMgr->Execute(WorldEvents::WORLD_EVENT_ON_CONFIG_LOAD, nullptr);
 
 #ifdef ENABLE_PLAYERBOTS
     //sPlayerbotAIConfig.Initialize();

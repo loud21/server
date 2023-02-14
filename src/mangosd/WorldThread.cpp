@@ -39,6 +39,7 @@
 #include <chrono>
 #include <thread>
 
+#include "WorldScript.h"
 #ifdef ENABLE_ELUNA
 #include "LuaEngine.h"
 #endif /* ENABLE_ELUNA */
@@ -63,6 +64,9 @@ int WorldThread::open(void* unused)
         World::StopNow(ERROR_EXIT_CODE);
         return -1;
     }
+    // Add custom onStartup hook
+    sWorldScriptMgr->Execute(WorldEvents::WORLD_EVENT_ON_STARTUP);
+
 #ifdef ENABLE_ELUNA
     sEluna->OnStartup();
 #endif /* ENABLE_ELUNA */
